@@ -1,14 +1,16 @@
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QLabel, QWidgetItem
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QWidgetItem
 from PySide2.QtGui import QFont
 
 from typing import List
+
+from SubWindow.playback.ClickableLabel import ClickableLabel
 
 
 class OnTopWindow(QWidget):
     def __init__(self):
         super(OnTopWindow, self).__init__()
-        self.sub_labels: List[QLabel] = []
+        self.sub_labels: List[ClickableLabel] = []
 
         self.setWindowTitle("Sub")
 
@@ -26,7 +28,7 @@ class OnTopWindow(QWidget):
         self.setLayout(self.main_layout)
 
     def get_main_layout_items(self) -> List[QWidgetItem]:
-        return [self.main_layout.itemAt(index) for index in  range(self.main_layout.count())]
+        return [self.main_layout.itemAt(index) for index in range(self.main_layout.count())]
 
     def clear_layout(self):
         for item in self.get_main_layout_items():
@@ -39,7 +41,7 @@ class OnTopWindow(QWidget):
             label.setStyleSheet("color: red;")
 
     def add_label(self, sub_word: str):
-        word_label = QLabel(sub_word)
+        word_label = ClickableLabel(sub_word)
         self.main_layout.addWidget(word_label)
         self.sub_labels.append(word_label)
 

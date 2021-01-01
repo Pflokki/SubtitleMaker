@@ -44,14 +44,11 @@
        </spacer>
       </item>
       <item>
-       <widget class="QComboBox" name="cB_window"/>
-      </item>
-      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QLabel" name="l_file_path">
           <property name="text">
-           <string/>
+           <string>{{file_path}}</string>
           </property>
          </widget>
         </item>
@@ -61,7 +58,7 @@
         <item>
          <widget class="QPushButton" name="pb_file_path">
           <property name="text">
-           <string>PushButton</string>
+           <string>...</string>
           </property>
          </widget>
         </item>
@@ -73,6 +70,34 @@
          <string>Старт</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="l_sound_track">
+          <property name="text">
+           <string>{{sound}}</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cb_sound_track"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="l_sub_track">
+          <property name="text">
+           <string>{{subtitle}}</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="cb_sub_track"/>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QPushButton" name="pB_exit">
