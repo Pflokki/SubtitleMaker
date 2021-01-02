@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
-    <height>197</height>
+    <width>396</width>
+    <height>272</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>SubWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,1">
+   <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,100,1">
     <item>
      <spacer name="horizontalSpacer">
       <property name="orientation">
@@ -44,7 +44,7 @@
        </spacer>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="hl_path">
         <item>
          <widget class="QLabel" name="l_file_path">
           <property name="text">
@@ -65,14 +65,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="pB_start">
-        <property name="text">
-         <string>Старт</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QHBoxLayout" name="hl_sound">
         <item>
          <widget class="QLabel" name="l_sound_track">
           <property name="text">
@@ -86,7 +79,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QHBoxLayout" name="hl_sub">
         <item>
          <widget class="QLabel" name="l_sub_track">
           <property name="text">
@@ -98,6 +91,13 @@
          <widget class="QComboBox" name="cb_sub_track"/>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pB_start">
+        <property name="text">
+         <string>Старт</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="pB_exit">
@@ -141,7 +141,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>425</width>
+     <width>396</width>
      <height>21</height>
     </rect>
    </property>
