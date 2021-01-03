@@ -20,7 +20,7 @@ class Subtitle:
 
     def get_subtitle(self, time):
         self.current_sub_item = self._get_sub_item(time)
-        return self.current_sub_item.text
+        return self.current_sub_item.text.replace('\n', ' ')
 
     def _get_sub_item(self, time):
         track = self.sub_track.at(time)
