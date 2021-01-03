@@ -1,6 +1,6 @@
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QWidgetItem
-from PySide2.QtGui import QFont
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QWidgetItem, QGraphicsDropShadowEffect
+from PySide2.QtGui import QFont, QColor
 
 from typing import List
 
@@ -37,9 +37,13 @@ class OnTopWindow(QWidget):
         self.main_layout.update()
 
     def update_labels_style(self):
+        effect = QGraphicsDropShadowEffect()
+        effect.setColor(QColor("black"))
+        effect.setOffset(-1, -1)
         for label in self.sub_labels:
-            label.setFont(QFont("Georgia", 28))
-            label.setStyleSheet("color: red;")
+            label.setFont(QFont("Georgia", 22))
+            label.setStyleSheet("color: white;")
+            label.setGraphicsEffect(effect)
 
     def add_label(self, sub_word: str):
         word_label = ClickableLabel(sub_word)
