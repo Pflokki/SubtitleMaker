@@ -19,6 +19,15 @@ class Player:
 
         self.pos_changed_handler = None
 
+    def get_size(self):
+        return self.media_player.video_get_size(0)
+
+    def set_hwnd(self, hwnd):
+        self.media_player.set_hwnd(hwnd)
+
+    def get_hwnd(self):
+        return self.media_player.get_hwnd()
+
     def set_position_changed_handler(self, handler: callable):
         self.pos_changed_handler = handler
 
