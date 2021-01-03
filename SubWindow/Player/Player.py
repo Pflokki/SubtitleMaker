@@ -19,6 +19,12 @@ class Player:
 
         self.pos_changed_handler = None
 
+    def toggle_play_pause(self):
+        if self.is_playing():
+            self.pause()
+        elif self.started:
+            self.play()
+
     def get_size(self):
         return self.media_player.video_get_size(0)
 
@@ -49,7 +55,7 @@ class Player:
         self.started = True
         if self.pos_changed_handler is not None:
             self.pos_changed_handler(self.get_current_time())
-        print(f"time: {self.get_current_time()}")
+        # print(f"time: {self.get_current_time()}")
 
     def play(self):
         self.media_player.play()

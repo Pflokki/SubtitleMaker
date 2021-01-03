@@ -1,5 +1,6 @@
 from PySide2.QtWidgets import QWidget, QHBoxLayout, QFrame
-from PySide2.QtCore import QTimer, QEvent
+from PySide2.QtCore import QTimer, QEvent, Qt
+from PySide2.QtGui import QKeyEvent
 
 from SubWindow.Player.Player import Player
 from SubWindow.Windows.OnTopSubWindow import OnTopWindow
@@ -31,6 +32,16 @@ class PlayerWindow(QWidget):
 
         self.sub_window = OnTopWindow()
         self.subtitle = Subtitle()
+
+    def keyPressEvent(self, event: QKeyEvent) -> None:
+        if event.key() == Qt.Key_Space:
+            self.player.toggle_play_pause()
+        elif event.key() == Qt.Key_S:
+            self.player.stop()
+        elif event.key() == Qt.Key_Q:
+            self.player.stop()
+            self.close()
+        event.accept()
 
     def show_full_screen(self):
         self.showMaximized()
