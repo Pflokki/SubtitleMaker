@@ -45,9 +45,11 @@ class Player:
         self.media_player.get_xwindow()
 
     def __get_param_from_track(self, track):
-        return track.id, track.language.decode("utf-8"), \
+        return track.id, \
+               track.language.decode("utf-8") if track.language else "", \
                track.description.decode("utf-8") if track.description else "", \
-               track.bitrate, track.codec
+               track.bitrate, \
+               track.codec
 
     def get_sound_info(self):
         return [AudioTrack(*self.__get_param_from_track(track))
