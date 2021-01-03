@@ -53,9 +53,9 @@ class MainWindow(QMainWindow):
         self.subtitle_window.move(x + (w - x) / 2 - self.subtitle_window.width() / 2, h - self.subtitle_window.height())
 
     def open_file_dialog(self):
-        # file_name = QFileDialog.getOpenFileName(self.ui, "Открыть файл")
-        # self.file_path = Path(file_name[0])
-        # self.ui.le_file_path.setText(file_name[0])
+        file_name = QFileDialog.getOpenFileName(self.ui, "Открыть файл")
+        self.file_path = Path(file_name[0])
+        self.ui.le_file_path.setText(file_name[0])
 
         self.load_file_info()
 
@@ -79,7 +79,7 @@ class MainWindow(QMainWindow):
         self.player.set_sound(soundtrack_id)
 
     def play(self):
-        current_sub = self.player.get_sub_info()[self.ui.cb_sub_track.currentIndex()].id \
+        current_sub = self.player.get_sub_info()[self.ui.cb_sub_track.currentIndex() - 1].id \
             if self.ui.cb_sub_track.currentIndex() != 0 else None
         current_sound = self.player.get_sound_info()[self.ui.cb_sound_track.currentIndex()].id
 
