@@ -34,6 +34,7 @@ class OnTopWindow(QWidget):
         for item in self.get_main_layout_items():
             self.main_layout.removeItem(item)
         self.sub_labels.clear()
+        self.main_layout.update()
 
     def update_labels_style(self):
         for label in self.sub_labels:

@@ -17,6 +17,11 @@ class Player:
         self.event_manager: EventManager = self.media_player.event_manager()
         self.event_manager.event_attach(EventType.MediaPlayerPositionChanged, self.player_position_changed)
 
+        self.pos_changed_handler = None
+
+    def set_position_changed_handler(self, handler: callable):
+        self.pos_changed_handler = handler
+
     def set_media(self, path):
         self.media: Media = self.instance.media_new(path)
         self.media_player.set_media(self.media)
@@ -33,18 +38,30 @@ class Player:
 
     def player_position_changed(self, *args, **kwargs):
         self.started = True
+        if self.pos_changed_handler is not None:
+            self.pos_changed_handler(self.get_current_time())
         print(f"time: {self.get_current_time()}")
 
     def play(self):
         self.media_player.play()
 
+    def pause(self):
+        self.media_player.pause()
+
+    def stop(self):
+        self.media_player.stop()
+
+    def is_playing(self):
+        return bool(self.media_player.is_playing())
+
+    def is_stopped(self):
+        return False
+
     def get_current_time(self):
         return self.media_player.get_time()
 
-    def test(self):
-        self.media_player.get_xwindow()
-
-    def __get_param_from_track(self, track):
+    @staticmethod
+    def __get_param_from_track(track):
         return track.id, \
                track.language.decode("utf-8") if track.language else "", \
                track.description.decode("utf-8") if track.description else "", \
