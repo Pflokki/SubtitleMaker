@@ -46,19 +46,19 @@ class MainWindow(QMainWindow):
         return False
 
     def open_video_dialog(self):
-        # file_name = QFileDialog.getOpenFileName(self.ui, "Выбрать файл")
-        # self.ui.le_file_path.setText(file_name[0])
-        self.video_path = Path(self.ui.le_file_path.text())
-
-        self.load_file_info()
+        file_name = QFileDialog.getOpenFileName(self.ui, "Выбрать файл")
+        self.ui.le_file_path.setText(file_name[0])
+        if file_name:
+            self.load_file_info()
 
     def open_sub_ext_dialog(self):
-        # file_name = QFileDialog.getOpenFileName(self.ui, "Выбрать субтитры")
-        # self.ui.pb_sub_ext_path.setText(file_name[0])
-        self.sub_ext_path = Path(self.ui.le_sub_ext_path.text())
+        file_name = QFileDialog.getOpenFileName(self.ui, "Выбрать субтитры")
+        self.ui.le_sub_ext_path.setText(file_name[0])
 
     def load_file_info(self):
-        self.player_window.player.set_media(self.video_path)
+        video_path = Path(self.ui.le_file_path.text())
+
+        self.player_window.player.set_media(video_path)
         self.player_window.player.parse_meta()
 
         sound = self.player_window.player.get_sound_info()
@@ -71,6 +71,7 @@ class MainWindow(QMainWindow):
         self.ui.cb_sub_track.addItems([str(track) for track in sub])
 
     def play(self):
+        sub_ext_path = Path(self.ui.le_sub_ext_path.text()) if self.ui.le_sub_ext_path.text() else None
         self.player_window.show()
         self.player_window.play(self.ui.cb_sound_track.currentIndex(), self.ui.cb_sub_track.currentIndex(),
-                                self.sub_ext_path)
+                                sub_ext_path)

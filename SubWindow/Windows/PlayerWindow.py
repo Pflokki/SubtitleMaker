@@ -70,16 +70,17 @@ class PlayerWindow(QWidget):
         self.player.set_sound(soundtrack_id)
 
     def play(self, sound_id, sub_id, sub_ext_path):
-        current_sub = self.player.get_sub_info()[sub_id - 1].id \
-            if sub_id != 0 else None
-        # current_sub = None
         current_sound = self.player.get_sound_info()[sound_id].id
-
-        self.subtitle.open(sub_ext_path)
+        current_sub = None
+        if sub_ext_path:
+            self.subtitle.open(sub_ext_path)
+        elif sub_id != 0:
+            current_sub = self.player.get_sub_info()[sub_id - 1].id
 
         self.player.play()
         while not self.player.started:  # used to delay before file will be opened
             pass
         self.set_tracks(current_sub, current_sound)  # must be sets after starting video
 
-        self.update_sub_position_timer.start()
+        if sub_ext_path:
+            self.update_sub_position_timer.start()
