@@ -9,7 +9,6 @@ from SubWindow.Windows.OnTopSubWindow import OnTopWindow
 from SubWindow.Subtitles import Subtitle
 
 DEFAULT_WINDOW_TITLE = "SubPlayer"
-
 DEFAULT_WINDOW_SIZE = (320, 240)
 
 

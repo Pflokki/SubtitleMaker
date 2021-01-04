@@ -6,11 +6,9 @@ from PySide2.QtUiTools import QUiLoader
 from PySide2.QtCore import QEvent
 
 from SubWindow.Windows.PlayerWindow import PlayerWindow
-from SubWindow.Win32Helper import WindowList
 
 MAIN_WINDOW_PATH = r"Forms/form.ui"
 MAIN_WINDOW_DIR = Path(__file__).parent.parent
-
 
 
 class MainWindow(QMainWindow):
@@ -33,15 +31,6 @@ class MainWindow(QMainWindow):
         self.ui.l_sub_track.setText("Субтитры")
 
         self.player_window = PlayerWindow()
-
-        self.windows = []
-        self.window_list = WindowList()
-
-    def eventFilter(self, obj, event: QEvent) -> bool:
-        if event.type() == QEvent.Enter:
-            self.update_window_list()
-            return True
-        return False
 
     def open_video_dialog(self):
         file_name = QFileDialog.getOpenFileName(self.ui, "Выбрать файл")
