@@ -2,26 +2,28 @@ from PySide2.QtWidgets import QWidget, QHBoxLayout, QFrame
 from PySide2.QtCore import QTimer, QEvent, Qt
 from PySide2.QtGui import QKeyEvent
 
+from pathlib import Path
+
 from SubWindow.Player.Player import Player
 from SubWindow.Windows.OnTopSubWindow import OnTopWindow
 from SubWindow.Subtitles import Subtitle
 
-# WINDOW_TITLE = "VLC (Direct3D11 output)"
-WINDOW_TITLE = "SubPlayer"
+DEFAULT_WINDOW_TITLE = "SubPlayer"
+
+DEFAULT_WINDOW_SIZE = (320, 240)
 
 
 class PlayerWindow(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle(WINDOW_TITLE)
+        self.setWindowTitle(DEFAULT_WINDOW_TITLE)
 
         self.player_frame = QFrame()
         self.main_layout = QHBoxLayout()
         self.main_layout.addWidget(self.player_frame)
         self.setLayout(self.main_layout)
-        self.setMinimumSize(320, 240)
-        self.setContentsMargins(0, 0, 0, 0)
+        self.setMinimumSize(*DEFAULT_WINDOW_SIZE)
 
         self.player = Player()
         self.player.set_hwnd(self.player_frame.winId())
@@ -32,6 +34,11 @@ class PlayerWindow(QWidget):
 
         self.sub_window = OnTopWindow()
         self.subtitle = Subtitle()
+
+    def set_player_media(self, video_path: Path):
+        self.setWindowTitle(f"{DEFAULT_WINDOW_TITLE} - {video_path.name}")
+        self.player.set_media(video_path)
+        self.player.parse_meta()
 
     def keyPressEvent(self, event: QKeyEvent) -> None:
         if event.key() == Qt.Key_Space:

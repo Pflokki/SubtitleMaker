@@ -21,12 +21,10 @@ class MainWindow(QMainWindow):
 
         self.ui.pB_start.clicked.connect(self.play)
 
-        self.video_path: Path = None
         self.ui.l_file_path.setText("Путь к видео: ")
         self.ui.pb_file_path.clicked.connect(self.open_video_dialog)
         self.ui.le_file_path.setText(r"M:\Cериалы\Doctor Who Series 12 (2020)\Doctor Who s12e01 Spyfall Part One.avi")
 
-        self.sub_ext_path: Path = None
         self.ui.l_sub_ext.setText("Путь к субтитрам: ")
         self.ui.pb_sub_ext_path.clicked.connect(self.open_sub_ext_dialog)
         self.ui.le_sub_ext_path.setText(r"M:\Cериалы\Doctor Who Series 12 (2020)\Doctor Who s12e01 Spyfall Part One.eng.srt")
@@ -56,10 +54,7 @@ class MainWindow(QMainWindow):
         self.ui.le_sub_ext_path.setText(file_name[0])
 
     def load_file_info(self):
-        video_path = Path(self.ui.le_file_path.text())
-
-        self.player_window.player.set_media(video_path)
-        self.player_window.player.parse_meta()
+        self.player_window.set_player_media(Path(self.ui.le_file_path.text()))
 
         sound = self.player_window.player.get_sound_info()
         sub = self.player_window.player.get_sub_info()
