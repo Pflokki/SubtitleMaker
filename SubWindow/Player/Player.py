@@ -14,8 +14,10 @@ class Player:
         self.tracks = []
 
         self.started = False
+        self.stopped = False
         self.event_manager: EventManager = self.media_player.event_manager()
         self.event_manager.event_attach(EventType.MediaPlayerPositionChanged, self.player_position_changed)
+        self.event_manager.event_attach(EventType.MediaPlayerStopped, self.player_stoped)
 
         self.pos_changed_handler = None
 
@@ -70,7 +72,10 @@ class Player:
         return bool(self.media_player.is_playing())
 
     def is_stopped(self):
-        return False
+        return self.started and self.stopped
+
+    def player_stoped(self, *args, **kwargs):
+        self.stopped = True
 
     def get_current_time(self):
         return self.media_player.get_time()

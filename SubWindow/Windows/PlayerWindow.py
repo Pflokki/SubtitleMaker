@@ -74,7 +74,7 @@ class PlayerWindow(QWidget):
                 x, y = self.pos().x(), self.pos().y()
                 w, h = self.width(), self.height()
                 self.sub_window.move(x + w / 2 - self.sub_window.width() / 2, y + h - self.sub_window.height())
-        else:
+        elif self.player.is_stopped():
             self.end_video()
 
     def set_tracks(self, sub_id, soundtrack_id):
