@@ -44,11 +44,15 @@ class PlayerWindow(QWidget):
         if event.key() == Qt.Key_Space:
             self.player.toggle_play_pause()
         elif event.key() == Qt.Key_S:
-            self.player.stop()
+            self.end_video()
         elif event.key() == Qt.Key_Q:
             self.player.stop()
             self.close()
         event.accept()
+
+    def end_video(self):
+        self.player.stop()
+        self.resize(*DEFAULT_WINDOW_SIZE)
 
     def show_full_screen(self):
         self.showMaximized()
@@ -57,19 +61,22 @@ class PlayerWindow(QWidget):
         self.showNormal()
 
     def show(self) -> None:
-        self.setMinimumSize(*self.player.get_size())
+        self.resize(*self.player.get_size())
         super().show()
 
     def create_sub_window(self):
         cur_time = self.player.get_current_time()
-        if self.subtitle.is_changed(cur_time):
-            self.sub_window.close()
-            self.sub_window = OnTopWindow()
-            self.sub_window.set_text(self.subtitle.get_subtitle(cur_time))
-            self.sub_window.show()
-            x, y = self.pos().x(), self.pos().y()
-            w, h = self.width(), self.height()
-            self.sub_window.move(x + w / 2 - self.sub_window.width() / 2, y + h - self.sub_window.height())
+        if self.player.is_playing():
+            if self.subtitle.is_changed(cur_time):
+                self.sub_window.close()
+                self.sub_window = OnTopWindow()
+                self.sub_window.set_text(self.subtitle.get_subtitle(cur_time))
+                self.sub_window.show()
+                x, y = self.pos().x(), self.pos().y()
+                w, h = self.width(), self.height()
+                self.sub_window.move(x + w / 2 - self.sub_window.width() / 2, y + h - self.sub_window.height())
+        else:
+            self.end_video()
 
     def set_tracks(self, sub_id, soundtrack_id):
         if sub_id:
