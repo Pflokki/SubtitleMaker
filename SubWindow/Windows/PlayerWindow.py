@@ -1,6 +1,6 @@
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QFrame
+from PySide2.QtWidgets import QWidget, QVBoxLayout, QFrame
 from PySide2.QtCore import QTimer, QEvent, Qt
-from PySide2.QtGui import QKeyEvent
+from PySide2.QtGui import QKeyEvent, QMoveEvent
 
 from pathlib import Path
 
@@ -19,8 +19,15 @@ class PlayerWindow(QWidget):
         self.setWindowTitle(DEFAULT_WINDOW_TITLE)
 
         self.player_frame = QFrame()
-        self.main_layout = QHBoxLayout()
+        self.main_layout = QVBoxLayout()
         self.main_layout.addWidget(self.player_frame)
+
+        self.sub_window = OnTopWindow()
+        self.main_layout.addWidget(self.sub_window)
+
+        self.main_layout.setStretchFactor(self.player_frame, 100)
+        self.main_layout.setStretchFactor(self.sub_window, 1)
+
         self.setLayout(self.main_layout)
         self.setMinimumSize(*DEFAULT_WINDOW_SIZE)
 
@@ -31,7 +38,6 @@ class PlayerWindow(QWidget):
         self.update_sub_position_timer.setInterval(1)
         self.update_sub_position_timer.timeout.connect(self.create_sub_window)
 
-        self.sub_window = OnTopWindow()
         self.subtitle = Subtitle()
 
     def set_player_media(self, video_path: Path):
@@ -48,6 +54,11 @@ class PlayerWindow(QWidget):
             self.player.stop()
             self.close()
         event.accept()
+
+    def set_subtitle_widget_position(self):
+        x, y = self.pos().x(), self.pos().y()
+        w, h = self.width(), self.height()
+        self.sub_window.move(x + w / 2 - self.sub_window.width() / 2, y + h - self.sub_window.height())
 
     def end_video(self):
         self.player.stop()
@@ -67,13 +78,7 @@ class PlayerWindow(QWidget):
         cur_time = self.player.get_current_time()
         if self.player.is_playing():
             if self.subtitle.is_changed(cur_time):
-                self.sub_window.close()
-                self.sub_window = OnTopWindow()
                 self.sub_window.set_text(self.subtitle.get_subtitle(cur_time))
-                self.sub_window.show()
-                x, y = self.pos().x(), self.pos().y()
-                w, h = self.width(), self.height()
-                self.sub_window.move(x + w / 2 - self.sub_window.width() / 2, y + h - self.sub_window.height())
         elif self.player.is_stopped():
             self.end_video()
 
