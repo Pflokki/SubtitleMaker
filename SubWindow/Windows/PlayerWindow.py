@@ -50,15 +50,16 @@ class PlayerWindow(QWidget):
             self.player.toggle_play_pause()
         elif event.key() == Qt.Key_S:
             self.end_video()
+            self.sub_window.clear_layout()
         elif event.key() == Qt.Key_Q:
             self.player.stop()
             self.close()
         event.accept()
 
-    def set_subtitle_widget_position(self):
-        x, y = self.pos().x(), self.pos().y()
-        w, h = self.width(), self.height()
-        self.sub_window.move(x + w / 2 - self.sub_window.width() / 2, y + h - self.sub_window.height())
+    # def set_subtitle_widget_position(self):
+    #     x, y = self.pos().x(), self.pos().y()
+    #     w, h = self.width(), self.height()
+    #     self.sub_window.move(x + w / 2 - self.sub_window.width() / 2, y + h - self.sub_window.height())
 
     def end_video(self):
         self.player.stop()
