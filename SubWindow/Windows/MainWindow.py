@@ -22,11 +22,9 @@ class MainWindow(QMainWindow):
 
         self.ui.l_file_path.setText("Путь к видео: ")
         self.ui.pb_file_path.clicked.connect(self.open_video_dialog)
-        self.ui.le_file_path.setText(r"M:\Cериалы\Doctor Who Series 12 (2020)\Doctor Who s12e01 Spyfall Part One.avi")
 
         self.ui.l_sub_ext.setText("Путь к субтитрам: ")
         self.ui.pb_sub_ext_path.clicked.connect(self.open_sub_ext_dialog)
-        self.ui.le_sub_ext_path.setText(r"M:\Cериалы\Doctor Who Series 12 (2020)\Doctor Who s12e01 Spyfall Part One.eng.srt")
 
         self.ui.l_sound_track.setText("Аудио дорожка")
         self.ui.l_sub_track.setText("Субтитры")

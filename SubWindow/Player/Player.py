@@ -12,9 +12,9 @@ class Player:
         self.stopped = False
         self.event_manager: EventManager = self.media_player.event_manager()
         self.event_manager.event_attach(EventType.MediaPlayerPositionChanged, self.player_position_changed)
-        self.event_manager.event_attach(EventType.MediaPlayerStopped, self.player_stoped)
+        self.event_manager.event_attach(EventType.MediaPlayerStopped, self.player_stopped)
 
-        self.pos_changed_handler = None
+        # self.pos_changed_handler = None
 
     def toggle_play_pause(self):
         if self.is_playing():
@@ -28,8 +28,8 @@ class Player:
     def get_hwnd(self):
         return self.media_player.get_hwnd()
 
-    def set_position_changed_handler(self, handler: callable):
-        self.pos_changed_handler = handler
+    # def set_position_changed_handler(self, handler: callable):
+    #     self.pos_changed_handler = handler
 
     def set_media(self, path):
         self.media: Media = self.instance.media_new(path)
@@ -43,8 +43,8 @@ class Player:
 
     def player_position_changed(self, *args, **kwargs):
         self.started = True
-        if self.pos_changed_handler is not None:
-            self.pos_changed_handler(self.get_current_time())
+        # if self.pos_changed_handler is not None:
+        #     self.pos_changed_handler(self.get_current_time())
 
     def play(self):
         self.media_player.play()
@@ -55,13 +55,29 @@ class Player:
     def stop(self):
         self.media_player.stop()
 
+    def volume_up(self):
+        volume = self.media_player.audio_get_volume()
+        self.media_player.audio_set_volume(min(volume + 10, 100))
+
+    def volume_down(self):
+        volume = self.media_player.audio_get_volume()
+        self.media_player.audio_set_volume(max(volume - 10, 0))
+
+    def step_forward(self):
+        time = self.get_current_time()
+        self.media_player.set_time(min(time + 10 * 1000, self.media_player.get_length()))
+
+    def step_backward(self):
+        time = self.get_current_time()
+        self.media_player.set_time(max(time - 10 * 1000, 0))
+
     def is_playing(self):
         return bool(self.media_player.is_playing())
 
     def is_stopped(self):
         return self.started and self.stopped
 
-    def player_stoped(self, *args, **kwargs):
+    def player_stopped(self, *args, **kwargs):
         self.stopped = True
 
     def get_current_time(self):

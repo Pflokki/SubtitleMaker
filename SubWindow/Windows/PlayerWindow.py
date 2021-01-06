@@ -53,6 +53,14 @@ class PlayerWindow(QWidget):
         elif event.key() == Qt.Key_Q:
             self.player.stop()
             self.close()
+        elif event.key() == Qt.Key_Up:
+            self.player.volume_up()
+        elif event.key() == Qt.Key_Down:
+            self.player.volume_down()
+        elif event.key() == Qt.Key_Left:
+            self.player.step_backward()
+        elif event.key() == Qt.Key_Right:
+            self.player.step_forward()
         event.accept()
 
     # def set_subtitle_widget_position(self):
