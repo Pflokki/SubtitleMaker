@@ -34,9 +34,9 @@ class PlayerWindow(QWidget):
         self.player = Player()
         self.player.set_hwnd(self.player_frame.winId())
 
-        self.update_sub_position_timer = QTimer()
-        self.update_sub_position_timer.setInterval(1)
-        self.update_sub_position_timer.timeout.connect(self.create_sub_window)
+        self.subtitle_timer = QTimer()
+        self.subtitle_timer.setInterval(1)
+        self.subtitle_timer.timeout.connect(self.update_subtitles)
 
         self.subtitle = Subtitle()
 
@@ -71,10 +71,12 @@ class PlayerWindow(QWidget):
         self.showNormal()
 
     def show(self) -> None:
-        self.resize(*self.player.get_size())
         super().show()
 
-    def create_sub_window(self):
+    def resize_window(self, window_size: tuple):
+        self.resize(*window_size)
+
+    def update_subtitles(self):
         cur_time = self.player.get_current_time()
         if self.player.is_playing():
             if self.subtitle.is_changed(cur_time):
@@ -82,22 +84,16 @@ class PlayerWindow(QWidget):
         elif self.player.is_stopped():
             self.end_video()
 
-    def set_tracks(self, sub_id, soundtrack_id):
-        if sub_id:
-            self.player.set_sub(sub_id)
+    def set_tracks(self, soundtrack_id):
         self.player.set_sound(soundtrack_id)
+        self.player.disable_sub()
 
-    def play(self, sound_id, sub_id, sub_ext_path):
-        current_sub = None
-        if sub_ext_path:
-            self.subtitle.open(sub_ext_path)
-        elif sub_id != 0:
-            current_sub = sub_id
+    def play(self, sound_id, sub_path):
+        if sub_path:
+            self.subtitle.open(sub_path)
+            self.subtitle_timer.start()
 
         self.player.play()
         while not self.player.started:  # used to delay before file will be opened
             pass
-        self.set_tracks(current_sub, sound_id)  # must be sets after starting video
-
-        if sub_ext_path:
-            self.update_sub_position_timer.start()
+        self.set_tracks(sound_id)  # must be sets after starting video

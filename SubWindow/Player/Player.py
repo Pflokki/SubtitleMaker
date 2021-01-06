@@ -22,9 +22,6 @@ class Player:
         elif self.started:
             self.play()
 
-    def get_size(self):
-        return self.media_player.video_get_size(0)
-
     def set_hwnd(self, hwnd):
         self.media_player.set_hwnd(hwnd)
 
@@ -38,8 +35,8 @@ class Player:
         self.media: Media = self.instance.media_new(path)
         self.media_player.set_media(self.media)
 
-    def set_sub(self, track_id: int):
-        return self.media_player.video_set_spu(track_id)
+    def disable_sub(self):
+        return self.media_player.video_set_spu(-1)
 
     def set_sound(self, soundtrack_id: int):
         return self.media_player.audio_set_track(soundtrack_id)
