@@ -65,7 +65,11 @@ class MainWindow(QMainWindow):
         self.player_window.resize_window(self.video.video_size)
         self.player_window.show()
         audio_id = self.video.get_audio_track_list()[self.ui.cb_sound_track.currentIndex()].id
-        sub_id = self.video.get_sub_track_list()[self.ui.cb_sub_track.currentIndex() - 1].id
-        sub_ext_path = Path(self.ui.le_sub_ext_path.text()) \
-            if self.ui.le_sub_ext_path.text() else self.video.get_subtitle(sub_id)
+        if self.ui.le_sub_ext_path.text():
+            sub_ext_path = Path(self.ui.le_sub_ext_path.text())
+        elif self.ui.cb_sub_track.currentIndex() != 0:
+            sub_id = self.video.get_sub_track_list()[self.ui.cb_sub_track.currentIndex() - 1].id
+            sub_ext_path = self.video.get_subtitle(sub_id)
+        else:
+            sub_ext_path = None
         self.player_window.play(audio_id, sub_ext_path)
