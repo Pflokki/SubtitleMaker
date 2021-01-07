@@ -7,9 +7,9 @@ from typing import List
 from SubWindow.playback.ClickableLabel import ClickableLabel
 
 
-class OnTopWindow(QWidget):
-    def __init__(self):
-        super(OnTopWindow, self).__init__()
+class SubWidget(QWidget):
+    def __init__(self, translator):
+        super(SubWidget, self).__init__()
         self.sub_labels: List[ClickableLabel] = []
 
         self.setStyleSheet("background:transparent;")
@@ -24,6 +24,8 @@ class OnTopWindow(QWidget):
         self.main_layout.addSpacerItem(right_spacer)
 
         self.setLayout(self.main_layout)
+
+        self.translator = translator
 
     def get_sub_layout_items(self) -> List[QWidgetItem]:
         return [self.sub_layout.itemAt(index) for index in range(self.sub_layout.count())]
@@ -42,7 +44,7 @@ class OnTopWindow(QWidget):
             label.setGraphicsEffect(effect)
 
     def add_label(self, sub_word: str):
-        word_label = ClickableLabel(sub_word)
+        word_label = ClickableLabel(sub_word, self.translator)
         self.sub_layout.addWidget(word_label)
         self.sub_labels.append(word_label)
 

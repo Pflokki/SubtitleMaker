@@ -1,12 +1,13 @@
 from PySide2.QtWidgets import QWidget, QVBoxLayout, QFrame
-from PySide2.QtCore import QTimer, QEvent, Qt
-from PySide2.QtGui import QKeyEvent, QMoveEvent
+from PySide2.QtCore import QTimer, Qt
+from PySide2.QtGui import QKeyEvent
 
 from pathlib import Path
 
 from SubWindow.Player.Player import Player
-from SubWindow.Windows.OnTopSubWindow import OnTopWindow
+from SubWindow.Windows.SubWidget import SubWidget
 from SubWindow.Subtitles import Subtitle
+from SubWindow.Translator import Translator
 
 DEFAULT_WINDOW_TITLE = "SubPlayer"
 DEFAULT_WINDOW_SIZE = (320, 240)
@@ -22,7 +23,8 @@ class PlayerWindow(QWidget):
         self.main_layout = QVBoxLayout()
         self.main_layout.addWidget(self.player_frame)
 
-        self.sub_window = OnTopWindow()
+        self.translator = Translator()
+        self.sub_window = SubWidget(self.translator)
         self.main_layout.addWidget(self.sub_window)
 
         self.main_layout.setStretchFactor(self.player_frame, 100)
