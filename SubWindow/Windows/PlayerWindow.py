@@ -65,11 +65,6 @@ class PlayerWindow(QWidget):
             self.player.step_forward()
         event.accept()
 
-    # def set_subtitle_widget_position(self):
-    #     x, y = self.pos().x(), self.pos().y()
-    #     w, h = self.width(), self.height()
-    #     self.sub_window.move(x + w / 2 - self.sub_window.width() / 2, y + h - self.sub_window.height())
-
     def end_video(self):
         self.player.stop()
         self.resize(*DEFAULT_WINDOW_SIZE)

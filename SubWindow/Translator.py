@@ -5,13 +5,15 @@ from pathlib import Path
 
 from SubWindow.Dictionary import WordDictionary
 
+CONFIG_PATH = r'settings.ini'
+
 
 class Translator:
     def __init__(self):
         self.dictionary = WordDictionary()
 
         config = configparser.ConfigParser()
-        config.read(Path(__file__).parent.joinpath('settings.ini'))
+        config.read(Path(__file__).parent.joinpath(CONFIG_PATH))
         api_key = config['API KEYS']['rapidapi-key']
 
         self.url = "https://microsoft-translator-text.p.rapidapi.com/translate"
