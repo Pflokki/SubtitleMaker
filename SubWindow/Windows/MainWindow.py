@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from PySide2.QtWidgets import QMainWindow, QFileDialog
+from PySide2.QtWidgets import QWidget, QFileDialog
 from PySide2.QtUiTools import QUiLoader
 
 from SubWindow.Windows.PlayerWindow import PlayerWindow
@@ -12,9 +12,9 @@ MAIN_WINDOW_PATH = r"Forms/form.ui"
 MAIN_WINDOW_DIR = Path(__file__).parent.parent
 
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+class MainWindow(QWidget):
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
         path = Path.joinpath(MAIN_WINDOW_DIR, MAIN_WINDOW_PATH)
         self.ui = QUiLoader().load(os.path.join(path), self)  # !!! don't ask
 

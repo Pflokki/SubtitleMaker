@@ -8,14 +8,15 @@ from SubWindow.Player.Player import Player
 from SubWindow.Windows.SubWidget import SubWidget
 from SubWindow.Subtitles import Subtitle
 from SubWindow.Translator import Translator
+from SubWindow.Windows.WordWindow import NoNewWordMessageWindow, NewWordWidget
 
 DEFAULT_WINDOW_TITLE = "SubPlayer"
 DEFAULT_WINDOW_SIZE = (320, 240)
 
 
 class PlayerWindow(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super(PlayerWindow, self).__init__(parent)
 
         self.setWindowTitle(DEFAULT_WINDOW_TITLE)
 
@@ -49,12 +50,8 @@ class PlayerWindow(QWidget):
     def keyPressEvent(self, event: QKeyEvent) -> None:
         if event.key() == Qt.Key_Space:
             self.player.toggle_play_pause()
-        elif event.key() == Qt.Key_S:
+        elif event.key() in [Qt.Key_S, Qt.Key_Q]:
             self.end_video()
-            self.sub_window.clear_layout()
-        elif event.key() == Qt.Key_Q:
-            self.player.stop()
-            self.close()
         elif event.key() == Qt.Key_Up:
             self.player.volume_up()
         elif event.key() == Qt.Key_Down:
@@ -66,17 +63,23 @@ class PlayerWindow(QWidget):
         event.accept()
 
     def end_video(self):
+        self.subtitle_timer.stop()
         self.player.stop()
         self.resize(*DEFAULT_WINDOW_SIZE)
+        self.sub_window.clear_layout()
+        if len(self.translator.dictionary.words):
+            self.table_word = NewWordWidget()
+            self.table_word.set_content(self.translator.dictionary.words)
+            self.table_word.show()
+        else:
+            self.msg_window = NoNewWordMessageWindow()
+            self.msg_window.show()
 
     def show_full_screen(self):
         self.showMaximized()
 
     def show_normal_screen(self):
         self.showNormal()
-
-    def show(self) -> None:
-        super().show()
 
     def resize_window(self, window_size: tuple):
         self.resize(*window_size)
