@@ -1,6 +1,4 @@
-from PySide2.QtCore import Qt
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QWidgetItem, QGraphicsDropShadowEffect, QSpacerItem, QSizePolicy
-from PySide2.QtGui import QFont
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QWidgetItem, QSpacerItem, QSizePolicy
 
 from typing import List
 
@@ -35,13 +33,10 @@ class SubWidget(QWidget):
             self.sub_layout.itemAt(item).widget().setParent(None)
 
     def update_labels_style(self):
-        effect = QGraphicsDropShadowEffect()
-        effect.setColor(Qt.black)
-        effect.setOffset(-1, -1)
+        height = self.parent().size().height()
+        font_size = height // 50
         for label in self.sub_labels:
-            label.setFont(QFont("Georgia", 22))
-            label.setStyleSheet("color: black;")
-            label.setGraphicsEffect(effect)
+            label.set_default_style(font_size)
 
     def add_label(self, sub_word: str):
         word_label = ClickableLabel(sub_word, self.translator)
