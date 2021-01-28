@@ -52,6 +52,8 @@ class PlayerWindow(QWidget):
             self.player.toggle_play_pause()
         elif event.key() in [Qt.Key_S, Qt.Key_Q]:
             self.end_video()
+        elif event.key() == Qt.Key_T:
+            self.player.toggle_time_showing()
         elif event.key() == Qt.Key_Up:
             self.player.volume_up()
         elif event.key() == Qt.Key_Down:
@@ -61,6 +63,9 @@ class PlayerWindow(QWidget):
         elif event.key() == Qt.Key_Right:
             self.player.step_forward()
         event.accept()
+
+    def show_time_text(self):
+        self.player.media_player.video_set_marquee_string()
 
     def end_video(self):
         self.subtitle_timer.stop()
@@ -105,3 +110,5 @@ class PlayerWindow(QWidget):
         while not self.player.started:  # used to delay before file will be opened
             pass
         self.set_tracks(sound_id)  # must be sets after starting video
+        self.player.init_marque()
+
