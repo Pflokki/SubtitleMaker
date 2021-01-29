@@ -2,7 +2,7 @@ from PySide2.QtWidgets import QWidget, QHBoxLayout, QWidgetItem, QSpacerItem, QS
 
 from typing import List
 
-from SubWindow.playback.ClickableLabel import ClickableLabel
+from SubWindow.payload.ClickableLabel import ClickableLabel
 
 
 class SubWidget(QWidget):

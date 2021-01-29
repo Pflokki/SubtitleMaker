@@ -1,4 +1,4 @@
-from SubWindow.Player.playback.Track import Track
+from SubWindow.Player.payload.Track import Track
 
 
 class AudioTrack(Track):

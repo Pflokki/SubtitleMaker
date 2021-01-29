@@ -3,7 +3,7 @@ from PySide2.QtWidgets import QLabel, QGraphicsDropShadowEffect
 from PySide2.QtGui import QFont
 
 from SubWindow.Translator import Translator
-from SubWindow.playback.TextSplitter import TextSplitter
+from SubWindow.payload.TextSplitter import TextSplitter
 
 
 class ClickableLabel(QLabel):

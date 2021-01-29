@@ -1,10 +1,10 @@
 from pathlib import Path
 import ffmpeg
 
-from SubWindow.Player.playback.VideoTrack import VideoTrack
-from SubWindow.Player.playback.AudioTrack import AudioTrack
-from SubWindow.Player.playback.SubTrack import SubTrack
-from SubWindow.Player.playback.SubTrack import Track
+from SubWindow.Player.payload.VideoTrack import VideoTrack
+from SubWindow.Player.payload.AudioTrack import AudioTrack
+from SubWindow.Player.payload.SubTrack import SubTrack
+from SubWindow.Player.payload.SubTrack import Track
 
 
 CODEC_TYPE_HANDLER = {
